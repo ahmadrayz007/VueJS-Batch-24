@@ -17,18 +17,20 @@
       el: '#app',
       data: {
         firstName : 'Tuanku',
-        lastName : 'Imam Bonjol'
+        middleName : 'Imam',
+        lastName : 'Bonjol'
       },
       computed : {
         fullName : {
           get(){
-            return this.firstName + ' ' + this.lastName
+            return this.firstName + ' ' + this.middleName + ' ' + this.lastName
           },
           set(params){
             let arr = params.split(" ")
             this.firstName = arr[0]
-            this.lastName = arr [1]
-            return this.firstName + this.lastName
+            this.middleName = arr [1]
+            this.lastName = arr [2]
+            return this.firstName + this.middleName + this.lastName
           }
         }
       },
