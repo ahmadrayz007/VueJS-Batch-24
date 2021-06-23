@@ -9,7 +9,7 @@
 <body>
   <div id="app">
     <button onclick="vm.openform()">Open Form</button>
-    <h1>{{ "Nilai a: " + jumlah }}</h1>
+    <h1>{{ "Nilai a: " + a }}</h1>
     <h1>{{ "Rata2: " + rata2 }}</h1>
   </div>
   
@@ -19,27 +19,24 @@
       el: '#app',
       data: {
         a : 0,
-        b : 0,
-        c : 0,
-        d : 0,
+        rata2 : 0
+
       },
 
       methods : {
           openform : function(){
-              this.a = prompt("masukan nilai a")
-              this.b = prompt("masukan nilai a")
-              this.c = prompt("masukan nilai a")
-              this.d = prompt("masukan nilai a")
+                var count = 0
+                while(count < 3){
+                this.a = this.a + parseInt(prompt("masukan nilai a"))
+                count = count + 1
+              }
+              this.rata2 = this.a / count
+
           }
       },
-
+          
       computed : {
-          jumlah : function() {
-            return parseInt(this.a) + parseInt(this.b) + parseInt(this.c) + parseInt(this.d)    
-          },
-          rata2 : function(){
-            return (parseInt(this.a) + parseInt(this.b) + parseInt(this.c) + parseInt(this.d))/4
-          }
+
       }
   })
   </script>

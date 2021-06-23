@@ -35,10 +35,9 @@
 
       computed : {
           searchBooks : function(){
-            var self=this;
-			return self.books.filter(function(val){
-			return val.indexOf(self.search)!== -1;
-			})
+            return this.books.filter((book)=>{
+              return book.toLowerCase().includes(this.search.toLowerCase())
+            })
           }
       }
   })

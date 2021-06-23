@@ -8,12 +8,14 @@
 </head>
 <body>
   <div id="app">
-    <input type="text" v-model="add">
-    <button @click="tambah">add</button>  
-    <ul>
-        <li v-for="name in users">{{ name.name }} <button>Edit</button> || <button @click="eventDelete">Delete</button></li>
-        
-    </ul>
+      <div v-for="(comment, index) in comments">
+        <button @click="tambah(index)" type="button">+</button> <br>
+        {{ comment.body }} {{ comment.time }} Score: {{ comment.score }}
+        <br>
+        <button @click="kurang(index)" type="button">-</button>
+
+    </div>
+    <textarea name="" id="" cols="30" rows="10" v-model="commentText" @keyup.enter="createComment"></textarea>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -21,30 +23,53 @@
    var vm = new Vue({
       el: '#app',
       data: {
-          add : '',
-          users : [
-              {
-                  'name' : 'Ahmad Rayis'
-              },
-              {
-                  'name' : 'Muhammad Iqbal'
-              },
-              {
-                  'name' : 'Faqih Muhammad'
-              },
-          ],    
+          addComment : '',
+          comments : [
+              { body : 'komentar 1', time : '29-10-2021', score : 1},
+              { body : 'komentar 2', time : '29-10-2021', score : 2},
+              { body : 'komentar 3', time : '29-10-2021', score : 3}
+          ],
+          plus : false,
+          minus : false,
+          commentText : ''
       },
 
       methods : {
-          tambah: function(){
-              this.users.name.shift(this.add)
+          tambah: function(index){
+              console.log('masuk plus')
+              this.plus = !this.plus
+              this.minus = false
+              this.updateScore(index)
+
           },
-          eventDelete: function(){
-              this.users.splice(this.name, 1)
+          kurang : function(index){
+              console.log("masuk minus")
+              this.minus = !this.minus
+              this.plus = false
+              this.updateScore(index)
+
+          },
+          createComment : function(){
+              this.comments.push(
+                  { body : this.commentText, time : '29-10-2021', score : 0}
+              )
+          },
+          updateScore : function(index){
+              console.log(this.comments[index].score)
+              if(this.plus)
+                 this.comments[index].score + 1
+              else if (this.minus)
+                 this.comments[index].score - 1
+              else  
+                 this.comments[index].score
           }
       },
 
       computed : {
+          score: function(){
+              
+
+          }
       }
   })
   </script>

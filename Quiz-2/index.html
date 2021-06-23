@@ -8,10 +8,11 @@
 </head>
 <body>
   <div id="app">
-    <input type="text" v-model="add">
-    <button @click="tambah">add</button>  
+    <input @keyup.enter="tambah" type="text" v-model="add.name">
+    <button @click="tambah" v-show="!updateSubmit">add</button>  
+    <button @click="update" v-show="updateSubmit">Update</button>  
     <ul>
-        <li v-for="name in users">{{ name.name }} <button>Edit</button> || <button @click="eventDelete">Delete</button></li>
+        <li v-for="(user, index) in users">{{ user.name }} <button @click="edit(user, index)">Edit</button> || <button @click="eventDelete(index)">Delete</button></li>
         
     </ul>
   </div>
@@ -21,7 +22,9 @@
    var vm = new Vue({
       el: '#app',
       data: {
-          add : '',
+          add : {
+              'name' : ''
+          },
           users : [
               {
                   'name' : 'Ahmad Rayis'
@@ -32,16 +35,28 @@
               {
                   'name' : 'Faqih Muhammad'
               },
-          ],    
+          ],
+          updateSubmit: false,
+          selectedUser: ''
       },
 
       methods : {
           tambah: function(){
-              this.users.name.shift(this.add)
-              this.add = ""
+              this.users.push(
+                  this.add
+              )
+              this.add = {}
           },
-          eventDelete: function(){
-              this.users.splice(this.name, 1)
+          eventDelete: function(index){
+              this.users.splice(index, 1)
+          },
+          edit(user,index){
+              this.selectedUser = index
+              this.updateSubmit = true
+              this.add.name = user.name
+          },
+          update(){
+              this.users[this.selectedUser].name = this.add.name
           }
       },
 
